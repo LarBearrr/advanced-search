@@ -1,0 +1,77 @@
+<div class='container'>
+    <div class='row'>
+        <div class='col-sm-12 centered'>
+            <br>
+            <h3>Brandfolder Advanced Search</h3>
+            <hr>
+        </div>
+    </div>
+    <div class='row centered'>
+        <div class='col-xs-12'> 
+            <form action="post" class="well" action="#" id="j-brandfolder-advanced-search">
+                <div class="form-group">
+                    <label for="api_key">API Key - <a href="https://brandfolder.com/api" target="_blank">Get yours here</a></label>
+                    <input type="text" name="api_key" id="api_key" class="form-control" >
+                </div>
+
+                <div class="form-group">
+                    <label for="brandfolder_url">Brandfolder URL</label>
+                    <input type="text" name="brandfolder_url" id="brandfolder_url" class="form-control" >
+                </div>
+                
+                <div class="form-group">
+                    <label for="query">Query (1 per line)</label>
+                    <textarea name="query" id="query" class="form-control" rows="3"></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-primary" id="submit_search">
+                    <span>Submit</span>
+                    <div class="la-ball-fall" style="display: none;">
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                    </div>
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+        $('#j-brandfolder-advanced-search').submit(function(e) {
+            e.preventDefault();
+            $("#submit_search").attr('disabled', true);
+            $("#submit_search").find('span').hide();
+            $("#submit_search").find('.la-ball-fall').show();
+
+            $.ajax({
+              type: "POST",
+              dataType: 'json',
+              url: 'https://brandfolder.com/',
+              data: { token: $('#api_key').val(), slug: $('#brandfolder_url').val(), query: $('#query').val() },
+              success: function(data) {
+                swal({
+                    title: "Link Generated",
+                    type: "success",
+                    text: "https://brandfolder.com/organizations",
+                    confirmButtonColor: "#337ab7",
+                    confirmButtonText: "Visit Link",
+                    closeOnConfirm: false },
+                    function(isConfirm){
+                        if (isConfirm) {
+                            $(".confirm").attr('disabled', true);
+                            window.location = 'https://brandfolder.com/organizations';
+                        }
+                    });
+              }
+            }).always(function() {
+                $("#submit_search").attr('disabled', false);
+                $("#submit_search").find('span').show();
+                $("#submit_search").find('.la-ball-fall').hide();
+            });
+
+            return false;
+        });
+    });
+</script>
