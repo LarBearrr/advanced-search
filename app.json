@@ -7,16 +7,19 @@
   "success_url": "/",
   "env": {
     "BF_API_KEY": {
-      "description": "(optional) A Brandfolder API key to override the user option.",
-      "generator": ""
+      "description": "A Brandfolder API key to override the user option.",
+      "generator": "",
+      "required": false
     },
     "BF_URLS": {
-      "description": "(optional) A list of comma-separated Brandfolder URLs to override the user option.",
-      "value": ""
+      "description": "A list of comma-separated Brandfolder URLs to override the user option.",
+      "value": "",
+      "required": false
     },
     "LOCKUP_CODEWORD": {
-      "description": "(optional) A password required before searching (recommended if BF_API_KEY is set).",
-      "value": ""
+      "description": "A password required before searching (recommended if BF_API_KEY is set).",
+      "value": "",
+      "required": false
     }
   }
 }
