@@ -3,10 +3,11 @@ class WelcomeController < ApplicationController
     @token = ENV['BF_API_KEY'] || params[:bf_api_key]
     @slug = params[:bf_url].split('/').last.strip if params[:bf_url].present?
     @queries = params[:bf_query].split(/\r?\n/).uniq.reject(&:empty?)
+    @queries = "test this out"
     if @token.present? && @slug.present? && @queries.present?
-      redirect_url = get_manifest_url
+      redirect_url = get_external_share_url
       if redirect_url.present?
-        redirect_to 'https://brandfolder.com/agency'
+        redirect_to redirect_url
       else
         flash.now[:warning] = 'No assets matched queries.'
         render 'index'
@@ -19,16 +20,10 @@ class WelcomeController < ApplicationController
 
   private
 
-  def get_manifest_url
-    # uri = URI.parse("https://brandfolder.com/api/#{@slug}/qa/assets/advanced_search.json?token=#{@token}")
-    # http = Net::HTTP.new(uri.host, uri.port)
-    # http.use_ssl = true
-    # http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-    # request = Net::HTTP::Post.new('/v1.1/auth')
-    # request.add_field('Content-Type', 'application/json')
-    # request.body = {'queries' => @queries}
-    # response = http.request(request)
-    # 'https://brandfolder.com/agency'
-    ''
+  def get_external_share_url
+    param_data = { 'brandfolder_slug': @slug, 'token': @token, 'query': @queries }
+    response = Net::HTTP.post_form(URI.parse('https://brandfolder.coms/api/search'), param_data)
+    json_response = JSON.parse(response.body)
+    json_response['url'] if json_response['count'].to_i >= 0
   end
 end

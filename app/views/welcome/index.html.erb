@@ -32,7 +32,7 @@
                                 <% end %>
                             </select>
                         <% else %>
-                            <input type="text" name="bf_url" id="bf_url" class="form-control" value="<%= bf_urls.first.strip %>" disabled='disabled'>
+                            <input type="text" name="bf_url" id="bf_url" class="form-control" value="<%= bf_urls.first.strip %>" readonly='readonly'>
                         <% end %>
                     <% else %>
                         <input type="text" name="bf_url" id="bf_url" class="form-control" value="<%= @slug %>">
