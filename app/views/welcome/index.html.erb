@@ -14,7 +14,7 @@
             <form action="query" method='post' class="well" action="#" id="j-brandfolder-advanced-search">
                 <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
 
-                <% if ENV['BF_TOKEN'].blank? %>
+                <% if ENV['BF_API_KEY'].blank? %>
                     <div class="form-group">
                         <label for="bf_api_key">API Key - <a href="https://brandfolder.com/settings" target="_blank">Get yours here</a></label>
                         <input type="text" name="bf_api_key" id="bf_api_key" class="form-control" value="<%= @token %>">

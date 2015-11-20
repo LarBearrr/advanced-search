@@ -1,0 +1,22 @@
+{
+  "name": "Brandfolder Advanced Search",
+  "description": "Create your own instance of an app to use the Advanced Search API to generate a view of assets.",
+  "website": "https://brandfolder.com/",
+  "repository": "https://github.com/brandfolder/advanced-search",
+  "logo": "https://assets.brandfolder.com/4d7hqzyh/original/brandfolder_social_aquamarine_noshadow.png",
+  "success_url": "/",
+  "env": {
+    "BF_API_KEY": {
+      "description": "(optional) A Brandfolder API key to override the user option.",
+      "generator": ""
+    },
+    "BF_URLS": {
+      "description": "(optional) A list of comma-separated Brandfolder URLs to override the user option.",
+      "value": ""
+    },
+    "LOCKUP_CODEWORD": {
+      "description": "(optional) A password required before searching (recommended if BF_API_KEY is set).",
+      "value": ""
+    }
+  }
+}
