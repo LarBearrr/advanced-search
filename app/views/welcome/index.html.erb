@@ -11,7 +11,7 @@
             <% flash.each do |key, value| %>
               <%= content_tag :div, value, class: "alert alert-#{key}" %>
             <% end %>        
-            <form action="query" method='post' class="well" action="#" id="j-brandfolder-advanced-search">
+            <form action="search" method='post' class="well" action="#" id="j-brandfolder-advanced-search">
                 <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
 
                 <% if ENV['BF_API_KEY'].blank? %>
@@ -43,6 +43,16 @@
                     <label for="bf_query">Queries - 1 search per line</label>
                     <textarea name="bf_query" id="bf_query" class="form-control" rows="3"><%= @queries.join("\n") if @queries.present? %></textarea>
                 </div>
+
+                <% if ENV['BF_EXACT_MATCH'].present? && ENV['BF_EXACT_MATCH'] =~ /^(true|t|yes|y|1)$/i %>
+                    <input type="hidden" name="bf_match" id="bf_match" value="exact" checked>
+                <% else %>
+                    <div class="form-group"> 
+                        <% is_checked = @fuzzy_match ? '' : 'checked' %>
+                        <input type="checkbox" name="bf_match" id="bf_match" value="exact" <%= is_checked %>>
+                        <label for="bf_match">Exact Match?</label>
+                    </div>
+                <% end %>
 
                 <button type="submit" class="btn btn-primary" id="submit_search">
                     <span>Search</span>

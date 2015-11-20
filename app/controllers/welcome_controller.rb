@@ -1,9 +1,9 @@
 class WelcomeController < ApplicationController
-  def query
+  def search
     @token = ENV['BF_API_KEY'] || params[:bf_api_key]
     @slug = params[:bf_url].split('/').last.strip if params[:bf_url].present?
     @queries = params[:bf_query].split(/\r?\n/).uniq.reject(&:empty?)
-    @queries = "test this out"
+    @fuzzy_match = params[:bf_match] != 'exact'
     if @token.present? && @slug.present? && @queries.present?
       redirect_url = get_external_share_url
       if redirect_url.present?
@@ -21,9 +21,9 @@ class WelcomeController < ApplicationController
   private
 
   def get_external_share_url
-    param_data = { 'brandfolder_slug': @slug, 'token': @token, 'query': @queries }
-    response = Net::HTTP.post_form(URI.parse('https://brandfolder.coms/api/search'), param_data)
+    param_data = { 'brandfolder_slug': @slug, 'token': @token, 'fuzzy_match': @fuzzy_match, 'queries[]': @queries }
+    response = Net::HTTP.post_form(URI.parse('https://brandfolder/api/search'), param_data)
     json_response = JSON.parse(response.body)
-    json_response['url'] if json_response['count'].to_i >= 0
+    json_response['asset_count'].to_i > 0 ? json_response['url'] : ''
   end
 end
