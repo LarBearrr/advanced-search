@@ -7,3 +7,5 @@ BF_TOKEN: 'YOUR_API_TOKEN_HERE'
 BF_URLS: 'https://brandfolder.com/YOUR_BRANDFOLDER_SLUG, https://brandfolder.com/YOUR_BRANDFOLDER_SLUG2, https://brandfolder.com/YOUR_BRANDFOLDER_SLUG3'
 LOCKUP_CODEWORD: 'SIMPLE_PASSWORD'
 ```
+
+Find your API Token here: https://brandfolder.com/settings
