@@ -46,25 +46,35 @@
             $("#submit_search").find('.la-ball-fall').show();
 
             $.ajax({
+              beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
               type: "POST",
               dataType: 'json',
-              url: 'https://brandfolder.com/',
-              data: { token: $('#api_key').val(), slug: $('#brandfolder_url').val(), query: $('#query').val() },
+              url: 'query',
+              data: { bf_token: $('#api_key').val(), slug: $('#brandfolder_url').val(), query: $('#query').val() },
               success: function(data) {
                 swal({
                     title: "Link Generated",
                     type: "success",
-                    text: "https://brandfolder.com/organizations",
+                    text: data.url,
                     confirmButtonColor: "#337ab7",
                     confirmButtonText: "Visit Link",
                     closeOnConfirm: false },
                     function(isConfirm){
                         if (isConfirm) {
                             $(".confirm").attr('disabled', true);
-                            window.location = 'https://brandfolder.com/organizations';
+                            window.location = data.url;
                         }
                     });
               }
+            }).fail(function(xhr) {
+                var response = JSON.parse(xhr.responseText);
+                swal({
+                    title: "Error",
+                    type: "error",
+                    text: response.message,
+                    confirmButtonColor: "#337ab7",
+                    confirmButtonText: "Ok",
+                    closeOnConfirm: true } );
             }).always(function() {
                 $("#submit_search").attr('disabled', false);
                 $("#submit_search").find('span').show();
