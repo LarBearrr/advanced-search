@@ -13,7 +13,7 @@ class WelcomeController < ApplicationController
         render 'index'
       end
     else
-      flash.now[:danger] = 'Please fill out all the fields.'
+      flash.now[:danger] = 'Please fill out all of the fields.'
       render 'index'
     end
   end
@@ -22,8 +22,10 @@ class WelcomeController < ApplicationController
 
   def get_external_share_url
     param_data = { 'brandfolder_slug': @slug, 'token': @token, 'fuzzy_match': @fuzzy_match, 'queries[]': @queries }
-    response = Net::HTTP.post_form(URI.parse('https://brandfolder/api/search'), param_data)
+    response = Net::HTTP.post_form(URI.parse('https://brandfolder.com/api/search'), param_data)
     json_response = JSON.parse(response.body)
     json_response['asset_count'].to_i > 0 ? json_response['url'] : ''
+    rescue
+      ''
   end
 end
