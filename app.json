@@ -16,15 +16,15 @@
       "value": "",
       "required": false
     },
-    "LOCKUP_CODEWORD": {
-      "description": "A password required before searching (recommended if BF_API_KEY is set).",
-      "value": "",
-      "required": false
-    },
     "BF_EXACT_MATCH": {
       "description": "Force all searches to be exact matches.",
       "value": "true",
       "required": false      
+    },    
+    "LOCKUP_CODEWORD": {
+      "description": "A password required before searching (recommended if BF_API_KEY is set).",
+      "value": "",
+      "required": false
     }
   }
 }
