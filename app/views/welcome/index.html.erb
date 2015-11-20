@@ -23,8 +23,20 @@
 
                 <div class="form-group">
                     <label for="bf_url">Brandfolder URL</label>
-                    <% disabled_state = ENV['BF_URL'].present? ? 'disabled="disabled"' : '' %>
-                    <input type="text" name="bf_url" id="bf_url" class="form-control" value="<%= ENV['BF_URL'] || @slug%>" <%= disabled_state %>>
+                    <% if ENV['BF_URLS'].present? %>
+                        <% bf_urls = ENV['BF_URLS'].split(',') %>
+                        <% if bf_urls.count > 1 %>
+                            <select name="bf_url" id="bf_url" class="form-control">
+                                <% bf_urls.each do |bf_url| %>
+                                    <option value="<%= bf_url.strip %>"><%= bf_url.strip %></option>
+                                <% end %>
+                            </select>
+                        <% else %>
+                            <input type="text" name="bf_url" id="bf_url" class="form-control" value="<%= bf_urls.first.strip %>" disabled='disabled'>
+                        <% end %>
+                    <% else %>
+                        <input type="text" name="bf_url" id="bf_url" class="form-control" value="<%= @slug %>">
+                    <% end %>
                 </div>
                 
                 <div class="form-group">
