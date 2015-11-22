@@ -7,7 +7,7 @@ class WelcomeController < ApplicationController
     if @token.present? && @slug.present? && @queries.present?
       redirect_url = get_external_share_url
       if redirect_url.present?
-        redirect_to redirect_url
+        redirect_to "#{redirect_url}#!select_all"
       else
         flash.now[:warning] = 'No assets matched queries.'
         render 'index'
