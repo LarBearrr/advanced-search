@@ -4,6 +4,7 @@ class WelcomeController < ApplicationController
     @slug = params[:bf_url].split('/').last.strip if params[:bf_url].present?
     @queries = params[:bf_query].split(/\r?\n/).uniq.reject(&:empty?)
     @fuzzy_match = params[:bf_match] != 'exact'
+    @per = params[:per] || ENV['PER_PAGE'] || 100
     if @token.present? && @slug.present? && @queries.present?
       redirect_url = get_external_share_url
       if redirect_url.present?
@@ -21,7 +22,7 @@ class WelcomeController < ApplicationController
   private
 
   def get_external_share_url
-    param_data = { 'brandfolder_slug': @slug, 'token': @token, 'fuzzy_match': @fuzzy_match, 'queries[]': @queries }
+    param_data = { 'brandfolder_slug': @slug, 'token': @token, 'fuzzy_match': @fuzzy_match, 'per': @per, 'queries[]': @queries }
     response = Net::HTTP.post_form(URI.parse('https://brandfolder.com/api/search'), param_data)
     json_response = JSON.parse(response.body)
     json_response['url']
