@@ -12,4 +12,4 @@ BF_EXACT_MATCH: 'true'
 PER_PAGE: 1000
 ```
 
-Find your API Token here: https://brandfolder.com/settings
+Find your API Token here: https://brandfolder.com/settings#api
